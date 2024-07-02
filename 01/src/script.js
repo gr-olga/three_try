@@ -10,7 +10,7 @@ const scene = new THREE.Scene()
 
 const group = new THREE.Group()
 group.position.y = 1
-group.scale.y = 2
+
 group.rotation.y = Math.PI / 4
 scene.add(group)
 const cube1 = new THREE.Mesh(
@@ -54,3 +54,34 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.render(scene, camera)
+
+
+//Time
+
+let time = Date.now()
+
+//Animation
+
+const tick = () => {
+    const currentTime = Date.now()
+    const deltaTime = currentTime - time
+    time = currentTime
+
+//Update objects
+
+    cube3.rotation.x += 0.01
+    cube2.position.x += 0.01
+    cube2.position.y += -0.01
+    cube1.rotation.z += 0.01
+    group.rotation.y += 0.001 * deltaTime
+
+
+    //Render
+    renderer.render(scene, camera)
+
+
+    //Call tick again on the next frame
+    window.requestAnimationFrame(tick)
+    renderer.render(scene, camera)
+}
+tick()
